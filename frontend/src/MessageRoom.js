@@ -59,12 +59,12 @@ const MessageRoom = ({ role }) => {
             const data = await response.json();
             if (data.customer === null) {
                 console.warn('Customer not found:', data.message);
-                // Handle customer not found case in the UI if needed
+                setCustomerInfo({});
             } else {
                 console.log("customer info fetched");
-                setCustomerInfo(data); // Assume data is the customer object now
-                setShowCustomerInfo(true);
+                setCustomerInfo(data); 
             }
+            setShowCustomerInfo(true);
         } catch (error) {
             console.error('Error fetching customer info:', error);
         }
@@ -86,11 +86,11 @@ const MessageRoom = ({ role }) => {
             
            // Refresh messages or search results depending on active mode
         if (messageSearchKeyword) {
-            searchMessages(); // Refresh search results if a search keyword is active
+            searchMessages(); 
         } else if (customerSearchKeyword) {
-            searchByCustomers(); // Refresh customer-based search results if customer keyword is active
+            searchByCustomers(); 
         } else {
-            fetchMessages(); // Otherwise, refresh the main messages list
+            fetchMessages(); 
         }
         } catch (error) {
             console.error('Error sending reply:', error);
@@ -109,7 +109,7 @@ const MessageRoom = ({ role }) => {
         if (lowUrgencyKeywords.some(keyword => messageBody.toLowerCase().includes(keyword))) {
             return 'low';
         }
-        return 'medium'; // Default priority
+        return 'medium';
     };
 
     const sendCustomerMessage = async () => {
@@ -222,6 +222,10 @@ const MessageRoom = ({ role }) => {
                             <small style={{ color: 'gray', marginLeft: '10px' }}>
                                 {result.assignedAgentId ? `(Assigned to Agent ID: ${result.assignedAgentId})` : ''}
                             </small>
+
+                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                    {new Date(result.timestamp).toLocaleString()} {/* Format timestamp */}
+                </span>
                             {role === "agent" && (
                     <button onClick={() => fetchCustomerInfo(result.userId)}>View Customer Info</button>
                 )}
@@ -230,6 +234,9 @@ const MessageRoom = ({ role }) => {
                                     result.responses.map((response, index) => (
                                         <li key={index} className="response">
                                             {response.agentId}: {response.responseBody}
+                                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                                    {new Date(response.timestamp).toLocaleString()} {/* Format response timestamp */}
+                                </span>
                                         </li>
                                     ))
                                 ) : (
@@ -274,6 +281,10 @@ const MessageRoom = ({ role }) => {
                             <small style={{ color: 'gray', marginLeft: '10px' }}>
                                 {msg.assignedAgentId ? `(Assigned to Agent ID: ${msg.assignedAgentId})` : ''}
                             </small>
+
+                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                    {new Date(msg.timestamp).toLocaleString()} 
+                </span>
                             {role === "agent" && (
                     <button onClick={() => fetchCustomerInfo(msg.userId)}>View Customer Info</button>
                 )}
@@ -282,6 +293,10 @@ const MessageRoom = ({ role }) => {
                                     msg.responses.map((response, index) => (
                                         <li key={index} className="response">
                                             {response.agentId}: {response.responseBody}
+
+                                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                                    {new Date(response.timestamp).toLocaleString()} 
+                                </span>
                                         </li>
                                     ))
                                 ) : (
