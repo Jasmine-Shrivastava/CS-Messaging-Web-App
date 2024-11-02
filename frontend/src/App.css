@@ -14,7 +14,7 @@ body {
   background-color: white; 
 }
 
-/* Header Styles */
+
 .chat-room-header {
   display: flex;
   align-items: center;
@@ -58,7 +58,6 @@ li:hover {
   color: #888; 
 }
 
-/* Reply Box Styles */
 .reply-box {
   margin-top: 10px;
   padding: 10px;
