@@ -59,12 +59,12 @@ const MessageRoom = ({ role }) => {
             const data = await response.json();
             if (data.customer === null) {
                 console.warn('Customer not found:', data.message);
-                // Handle customer not found case in the UI if needed
+                setCustomerInfo({});
             } else {
                 console.log("customer info fetched");
                 setCustomerInfo(data); // Assume data is the customer object now
-                setShowCustomerInfo(true);
             }
+            setShowCustomerInfo(true);
         } catch (error) {
             console.error('Error fetching customer info:', error);
         }
@@ -222,6 +222,10 @@ const MessageRoom = ({ role }) => {
                             <small style={{ color: 'gray', marginLeft: '10px' }}>
                                 {result.assignedAgentId ? `(Assigned to Agent ID: ${result.assignedAgentId})` : ''}
                             </small>
+
+                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                    {new Date(result.timestamp).toLocaleString()} {/* Format timestamp */}
+                </span>
                             {role === "agent" && (
                     <button onClick={() => fetchCustomerInfo(result.userId)}>View Customer Info</button>
                 )}
@@ -230,6 +234,9 @@ const MessageRoom = ({ role }) => {
                                     result.responses.map((response, index) => (
                                         <li key={index} className="response">
                                             {response.agentId}: {response.responseBody}
+                                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                                    {new Date(response.timestamp).toLocaleString()} {/* Format response timestamp */}
+                                </span>
                                         </li>
                                     ))
                                 ) : (
@@ -274,6 +281,10 @@ const MessageRoom = ({ role }) => {
                             <small style={{ color: 'gray', marginLeft: '10px' }}>
                                 {msg.assignedAgentId ? `(Assigned to Agent ID: ${msg.assignedAgentId})` : ''}
                             </small>
+
+                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                    {new Date(msg.timestamp).toLocaleString()} {/* Format timestamp */}
+                </span>
                             {role === "agent" && (
                     <button onClick={() => fetchCustomerInfo(msg.userId)}>View Customer Info</button>
                 )}
@@ -282,6 +293,10 @@ const MessageRoom = ({ role }) => {
                                     msg.responses.map((response, index) => (
                                         <li key={index} className="response">
                                             {response.agentId}: {response.responseBody}
+
+                                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                                    {new Date(response.timestamp).toLocaleString()} {/* Format response timestamp */}
+                                </span>
                                         </li>
                                     ))
                                 ) : (

@@ -1,25 +1,36 @@
+/* src/App.css */
+
+body {
+  background-color: #f9f9f9; /* Light background for contrast */
+  font-family: 'Arial', sans-serif;
+}
+
 .chat-room-container {
   width: 80%;
-  margin: 0 auto;
-  font-family: Arial, sans-serif;
+  margin: 20px auto; /* Added margin for better spacing */
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden; /* Prevent overflow */
+  background-color: white; /* White background for cards */
 }
 
 .chat-room-header {
   display: flex;
   align-items: center;
-  background-color: #00246b;
-  padding: 10px;
+  background-color: #00246b; /* Dark blue header */
+  padding: 15px; /* Increased padding for a better layout */
   color: white;
-  border-radius: 8px;
 }
 
 .logo {
-  width: 60px; /* Increased size */
-  margin-right: 10px;
+  width: 50px; /* Adjusted logo size */
+  margin-right: 15px; /* Increased spacing */
 }
 
 .company-name {
-  font-size: 24px;
+  font-size: 28px; /* Larger company name */
+  font-weight: bold; /* Bolder font */
 }
 
 ul {
@@ -29,10 +40,19 @@ ul {
 
 li {
   margin-bottom: 15px;
-  padding: 10px;
-  background-color: #f3f4f6;
+  padding: 15px; /* Increased padding for comfort */
+  background-color: #f3f4f6; /* Light gray for messages */
   border: 1px solid #ddd;
   border-radius: 8px;
+  position: relative; /* For positioning of timestamps */
+}
+
+li .timestamp {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #999; /* Light gray for timestamps */
 }
 
 .reply-box {
@@ -40,31 +60,35 @@ li {
 }
 
 .reply-box input {
-  padding: 5px;
+  padding: 10px; /* Increased padding */
   margin-right: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: calc(100% - 100px); /* Responsive input */
 }
 
 .customer-message-form {
   margin-top: 20px;
-  padding: 10px;
-  background-color: #eef4ff;
+  padding: 15px; /* Increased padding */
+  background-color: #eef4ff; /* Light blue for the form */
   border-radius: 8px;
 }
 
 .customer-message-form h3 {
-  color: #00246b;
+  color: #00246b; /* Consistent header color */
 }
 
 .customer-message-form input {
-  padding: 8px;
+  padding: 10px; /* Consistent padding */
   margin-right: 8px;
-  border: 1px solid #00246b;
+  border: 1px solid #00246b; /* Dark blue border */
   border-radius: 5px;
+  width: calc(100% - 80px); /* Responsive input */
 }
 
 .customer-message-form button {
-  padding: 8px;
-  background-color: #00246b;
+  padding: 10px 15px; /* Larger button */
+  background-color: #00246b; /* Consistent button color */
   color: #cadcfc;
   border: none;
   border-radius: 5px;
@@ -72,13 +96,11 @@ li {
 }
 
 .customer-message-form button:hover {
-  background-color: #8ab6f9;
-  color: #00246b;
+  background-color: #8ab6f9; /* Lighter blue on hover */
+  color: #00246b; /* Dark blue text on hover */
 }
 
-
-/* src/App.css */
-
+/* Role selection styling */
 .role-selection-container {
   text-align: center;
   margin-top: 100px;
@@ -95,21 +117,21 @@ li {
 }
 
 .role-selection-container button:hover {
-  background-color: #8ab6f9;
-  color: #00246b;
+  background-color: #8ab6f9; /* Light hover effect */
 }
 
+/* Popup styling */
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it appears above other content */
+  z-index: 1000; /* Ensures it appears above other content */
 }
 
 .popup-content {
