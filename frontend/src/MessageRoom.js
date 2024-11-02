@@ -60,10 +60,12 @@ const MessageRoom = ({ role }) => {
             if (data.customer === null) {
                 console.warn('Customer not found:', data.message);
                 setCustomerInfo({});
+                setCustomerInfo({});
             } else {
                 console.log("customer info fetched");
                 setCustomerInfo(data); 
             }
+            setShowCustomerInfo(true);
             setShowCustomerInfo(true);
         } catch (error) {
             console.error('Error fetching customer info:', error);
@@ -226,6 +228,10 @@ const MessageRoom = ({ role }) => {
                             <span style={{ color: 'lightgray', marginLeft: '10px' }}>
                     {new Date(result.timestamp).toLocaleString()} {/* Format timestamp */}
                 </span>
+
+                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                    {new Date(result.timestamp).toLocaleString()} {/* Format timestamp */}
+                </span>
                             {role === "agent" && (
                     <button onClick={() => fetchCustomerInfo(result.userId)}>View Customer Info</button>
                 )}
@@ -234,6 +240,9 @@ const MessageRoom = ({ role }) => {
                                     result.responses.map((response, index) => (
                                         <li key={index} className="response">
                                             {response.agentId}: {response.responseBody}
+                                            <span style={{ color: 'lightgray', marginLeft: '10px' }}>
+                                    {new Date(response.timestamp).toLocaleString()} {/* Format response timestamp */}
+                                </span>
                                             <span style={{ color: 'lightgray', marginLeft: '10px' }}>
                                     {new Date(response.timestamp).toLocaleString()} {/* Format response timestamp */}
                                 </span>
