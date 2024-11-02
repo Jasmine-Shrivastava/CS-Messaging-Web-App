@@ -3,6 +3,7 @@ import logo from './logo.png';
 import CustomerInfoPopup from './CustomerInfoPopup';
 // Canned messages array
 const cannedMessages = [
+    "Hello, How can I assist you today?",
     "Thank you for your inquiry. We will get back to you shortly.",
     "Your request has been received and is being processed.",
     "Please provide more details so we can assist you better.",
@@ -54,7 +55,7 @@ const MessageRoom = ({ role }) => {
     //fetch customer info
     const fetchCustomerInfo = async (userId) => {
         try {
-            const response = await fetch(`http://localhost:5000/customer/${userId}`);
+            const response = await fetch(`http://localhost:5000/customers/${userId}`);
             const data = await response.json();
             if (data.customer === null) {
                 console.warn('Customer not found:', data.message);
@@ -70,7 +71,6 @@ const MessageRoom = ({ role }) => {
     };
     
 
-    // Send reply to a message
     const sendReply = async (messageId) => {
         if (role !== "agent") return;
         const messageToSend = selectedCannedMessage || responseBody; // Use canned message if selected, otherwise responseBody
@@ -83,12 +83,20 @@ const MessageRoom = ({ role }) => {
             setResponseBody('');
             setSelectedCannedMessage('');
             setReplyMessageId(null);
-            fetchMessages();
+            
+           // Refresh messages or search results depending on active mode
+        if (messageSearchKeyword) {
+            searchMessages(); // Refresh search results if a search keyword is active
+        } else if (customerSearchKeyword) {
+            searchByCustomers(); // Refresh customer-based search results if customer keyword is active
+        } else {
+            fetchMessages(); // Otherwise, refresh the main messages list
+        }
         } catch (error) {
             console.error('Error sending reply:', error);
         }
     };
-
+    
     const generateRandomUserId = () => `${Math.floor(1000 + Math.random() * 9000)}`;
 
     const determineMessagePriority = (messageBody) => {
@@ -123,7 +131,7 @@ const MessageRoom = ({ role }) => {
 
     const importMessages = async () => {
         try {
-            const response = await fetch('http://localhost:5000/import-messages', {
+            const response = await fetch('http://localhost:5000/messages/import-messages', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -141,7 +149,7 @@ const MessageRoom = ({ role }) => {
     const searchMessages = async () => {
         if (!messageSearchKeyword) return;
         try {
-            const response = await fetch(`http://localhost:5000/search/messages?keyword=${messageSearchKeyword}`);
+            const response = await fetch(`http://localhost:5000/messages/search?keyword=${messageSearchKeyword}`);
             const data = await response.json();
             setSearchResults(data);
         } catch (error) {
@@ -149,10 +157,10 @@ const MessageRoom = ({ role }) => {
         }
     };
 
-    const searchCustomers = async () => {
+    const searchByCustomers = async () => {
         if (!customerSearchKeyword) return;
         try {
-            const response = await fetch(`http://localhost:5000/search/customers?keyword=${customerSearchKeyword}`);
+            const response = await fetch(`http://localhost:5000/customers/search?keyword=${customerSearchKeyword}`);
             const data = await response.json();
             setSearchResults(data);
         } catch (error) {
@@ -195,15 +203,15 @@ const MessageRoom = ({ role }) => {
                 <button onClick={searchMessages}>Search Messages</button>
             </div>
 
-            {/* Search Customers */}
+            {/* Search by Customers */}
             <div>
                 <input
                     type="text"
-                    placeholder="Search customers"
+                    placeholder="Search by customers ID"
                     value={customerSearchKeyword}
                     onChange={(e) => setCustomerSearchKeyword(e.target.value)}
                 />
-                <button onClick={searchCustomers}>Search Customers</button>
+                <button onClick={searchByCustomers}>Search Customers</button>
             </div>
 
             <ul>
