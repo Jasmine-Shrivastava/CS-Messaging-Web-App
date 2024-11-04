@@ -14,7 +14,7 @@ Step1 : Open your terminal (Git Bash) and run the following command to clone the
 git clone https://github.com/Jasmine-Shrivastava/CS-Messaging-Web-App.git
 
 
-Step 2:Initialize a Node application and install required dependencies in backend:
+Step 2: Initialize a Node application and install required dependencies in backend:
 
 npm init -y
 npm install express mongoose cors socket.io
@@ -23,6 +23,11 @@ npm install express mongoose cors socket.io
 Step 3: To start the server run the following command in backend.
 
 node server.js
+
+Step 4: Go to project folder (that is cd .. from backend) and create the frontend of the app by using the following command
+
+npx create-react-app frontend
+cd frontend
 
 Step 5: Install the required dependencies.
 
