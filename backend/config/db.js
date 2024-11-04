@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/branch-chat", {
+        await mongoose.connect("mongodb+srv://Jasmine19:JasmineShrivastava@cluster0.066fe.mongodb.net/sample_mflix", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });

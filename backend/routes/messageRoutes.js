@@ -143,7 +143,7 @@ router.get("/", async (req, res) => {
 
         const messagesWithCustomerInfo = await Promise.all(
             messages.map(async (message) => {
-                const customer = await Customer.findOne({ userID: message.userID });
+                const customer = await Customer.findOne({ userId: message.userId });
                 return {
                     ...message.toObject(),
                     customerName: customer ? customer.name : 'Unknown',
