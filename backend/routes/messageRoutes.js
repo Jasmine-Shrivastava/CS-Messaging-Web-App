@@ -102,15 +102,24 @@ router.put('/:id/reply', async (req, res) => {
             return res.status(404).json({ error: 'Message not found' });
         }
 
-        if (message.assignedAgentId && message.assignedAgentId.toString() !== agentId) {
-            return res.status(403).json({ error: 'You are not assigned to this message.' });
+        message.responses.push({ agentId, responseBody });
+        message.assignedAgentId = agentId;  // Set assigned agent
+        await message.save();  // Save after both updates
+
+        let agent = await Agent.findById(agentId);
+        console.log(agentId);
+
+        // If the agent is not found, create a new one
+        if (!agent) {
+            agent = new Agent({
+                _id: agentId,  // Use the provided agentId as the ID
+                name: `Agent_${Math.random().toString(36).substring(7)}`,  // Random name
+                status: "available"
+            });
+            await agent.save();
         }
 
-        message.responses.push({ agentId, responseBody });
-        await message.save();
-
-        const agent = await Agent.findById(agentId);
-        agent.status = "available";
+        agent.status = "available";  // Ensure agent is set to available
         await agent.save();
 
         res.json(message);
@@ -119,6 +128,7 @@ router.put('/:id/reply', async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
 
 // Search messages by keyword
 router.get("/search", async (req, res) => {
