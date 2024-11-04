@@ -29,7 +29,7 @@ Step 4: Go to project folder (that is cd .. from backend) and create the fronten
 npx create-react-app frontend
 cd frontend
 
-Step 5: Install the required dependencies.
+Step 5: Go to frontend and install the required dependencies.
 
 npm install axios react-router-dom socket.io-client
 
